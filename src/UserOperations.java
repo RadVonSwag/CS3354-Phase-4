@@ -10,14 +10,16 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * This class handles user authentication and user management.
+ * 
  * @author Andrew Estes
  * @NetID ace190002
- * InventoryManagementSecurity
  */
-public class SecurityOperations {
+public class UserOperations {
 
     /**
-     * Authenticates user against information in Users.dat using a username and password
+     * Authenticates user against information in Users.dat using a username and
+     * password
+     * 
      * @param <E>
      * @param username
      * @param password
@@ -30,9 +32,8 @@ public class SecurityOperations {
             authenticatedUser = new User<E>(username, GetPasswordHash(password));
         } else {
 
-            File checker = new File("Users.dat");
-            if (!checker.exists())
-            {
+            boolean fileExists = DoesExist();
+            if (fileExists == false) {
                 System.out.println("No user data found. Please sign in with the default admin credentials.");
                 return authenticatedUser;
             }
@@ -64,10 +65,30 @@ public class SecurityOperations {
                     authenticatedUser = new User<E>(username, GetPasswordHash(password));
                 }
 
-                // Set the user's First name and Last name
+                // Set the user's additional data
                 if (authenticatedUser != null) {
                     authenticatedUser.setFirstName(userInfo[0]);
                     authenticatedUser.setLastName(userInfo[1]);
+                        try {
+                            int gender = Integer.parseInt(userInfo[4]);
+                            authenticatedUser.setGender(gender);
+                        } catch (NumberFormatException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+
+                    try {
+                        authenticatedUser.setUID(Integer.parseInt(userInfo[6]));
+                    } catch (NumberFormatException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -75,33 +96,20 @@ public class SecurityOperations {
     }
 
     /**
-     * Checks if file exists
+     * Adds new user to Users.dat file based on parameters
+     * 
      * @param <E>
      * @param newUser
      */
-    public static boolean DoesExist()
-    {
-        boolean exists = true;
-        File checker = new File("Users.dat");
-        if (!checker.exists()){
-            exists = false;
-        }
-        return exists;
-        
-    }
-
-/**
- * Adds new user to Users.dat file based on parameters
- * @param <E>
- * @param newUser
- */
-    public static <E> void AddNewUser(User<E> newUser) {
+    public static <E> void CreateNewUser(User<E> newUser) {
         String firstName = newUser.getFirstName();
         String lastName = newUser.getLastName();
         String username = newUser.getUserName();
         String password = newUser.getPassword();
         int gender = newUser.getGender();
-        String userToAdd = firstName + ", " + lastName + ", " + username + ", " + password + ", " + gender;
+        int UID = newUser.getUID();
+        int genderPreference = newUser.getGenderPreference();
+        String userToAdd = firstName + ", " + lastName + ", " + username + ", " + password + ", " + gender + ", " + genderPreference + ", " + UID;
         String line = "";
 
         File fileChecker = new File("Users.dat");
@@ -136,7 +144,7 @@ public class SecurityOperations {
 
         try {
             FileWriter fw = new FileWriter("Users.dat", true);
-            fw.append(userToAdd+ "\n");
+            fw.append(userToAdd + "\n");
             fw.close();
             System.out.println("User successfully added!");
         } catch (IOException e) {
@@ -147,6 +155,7 @@ public class SecurityOperations {
 
     /**
      * Removes user from Users.dat File based on parameters
+     * 
      * @param userName
      */
     public static void RemoveUser(String userName) {
@@ -207,75 +216,8 @@ public class SecurityOperations {
     }
 
     /**
-     * Changes the hashed password stored in Users.dat to a new hash based on parameters
-     * @param username
-     * @param currentPassword
-     * @param newPassword
-     */
-    public static void ChangePassword(String username, String currentPassword, String newPassword) {
-        File fileChecker = new File("Users.dat");
-        if (!fileChecker.exists()) {
-            System.out
-                    .println("There are no users on record. You must add users before you can change their password.");
-            return;
-        }
-
-        String line = "";
-        try {
-            BufferedReader read = new BufferedReader(new FileReader("Users.dat"));
-            while ((line = read.readLine()) != null) {
-                if (line.indexOf(username) != -1) {
-                    break;
-                }
-            }
-            read.close();
-            if (line == null) {
-                System.out.println("User could not be found. Nothing has been changed.");
-                return;
-            }
-
-            String[] userInfo = line.split(", ");
-            if (!GetPasswordHash(currentPassword).equals(userInfo[3])) {
-                System.out.println("Current Password incorrect. Nothing has been changed.");
-                return;
-            } else if (GetPasswordHash(currentPassword).equals(userInfo[3])) {
-                userInfo[3] = GetPasswordHash(newPassword);
-            }
-
-            String updatedUser = userInfo[0] + ", " + userInfo[1] + ", " + userInfo[2] + ", " + userInfo[3] + ", "
-                    + userInfo[4];
-            File originalFile = new File("Users.dat");
-            File tempFile = new File(originalFile.getAbsolutePath() + ".tmp");
-            PrintWriter print = new PrintWriter(new FileWriter(tempFile));
-            String oldUserData = line;
-
-            BufferedReader read2 = new BufferedReader(new FileReader("Users.dat"));
-            while ((line = read2.readLine()) != null) {
-
-                if (!line.trim().equals(oldUserData)) {
-                    print.println(line);
-                    print.flush();
-                }
-            }
-            print.println(updatedUser);
-            print.close();
-            read2.close();
-            originalFile.delete();
-            tempFile.renameTo(originalFile);
-            if (tempFile.exists()) {
-                System.out.println(username
-                        + "\'s password has been changed successfully, however, the Users file could not be overwritten with new user data. See \"Users.dat.tmp\" for updated user records");
-            } else {
-                System.out.println(username + "\'s password has been successfully changed");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Hashes a string (password) using MD5 encryption
+     * 
      * @param password
      * @return hashed password
      */
@@ -304,5 +246,21 @@ public class SecurityOperations {
         }
 
         return generatedPassword;
+    }
+
+    /**
+     * Checks if file exists
+     * 
+     * @param <E>
+     * @param newUser
+     */
+    public static boolean DoesExist() {
+        boolean exists = true;
+        File checker = new File("Users.dat");
+        if (!checker.exists()) {
+            exists = false;
+        }
+        return exists;
+
     }
 }

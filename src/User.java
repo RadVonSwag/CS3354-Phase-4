@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * User class stores data for user objects
  * 
@@ -19,6 +21,11 @@ public class User<E> implements Comparable<E>
     private String hashedPassword;
 
     /**
+     * User ID number to identify user
+     */
+    private int UID;
+    
+    /**
      * Stores the first name for the User object as a String.
      */
     private String firstName;
@@ -36,23 +43,26 @@ public class User<E> implements Comparable<E>
     /**
      * Stores gender preference of user. Should be 0, for male, 1 for female, or 2 for any
      */
-    private int genderPreference;
+    private int genderPreference = 2;
 
     /**
      * Gender should be 0 for male, 1 for female, 2 for other
      */
-    private int gender;
+    private int gender = 2;
 
     /**
      * Constructor assigns values to User class's data fields.
      * @param username
      * @param hashedPassword
-     * @param isManager
+     * @param gender
      */
     public User(String username, String hashedPassword)
     {        
         this.username = username;
         this.hashedPassword = hashedPassword;
+        
+        Random random = new Random();
+        UID = random.nextInt(999999);
     }
 
     /**
@@ -111,13 +121,13 @@ public class User<E> implements Comparable<E>
         return gender;
     }
     /**
-     * Sets the gender for the user
+     * Sets the gender for the user. Gender is "other" by default
      * @param preference
      * @throws Exception
      */
     public void setGender(int gender) throws Exception
     {
-        if (gender != 0 || gender != 1 || gender != 2)
+        if (gender < 0 || gender > 2)
         {
             throw new Exception("Invalid gender!");
         }
@@ -133,7 +143,7 @@ public class User<E> implements Comparable<E>
         return genderPreference;
     }
     /**
-     * Sets the gender preference for the user
+     * Sets the gender preference for the user. Preference is "other" by default
      * @param preference
      * @throws Exception
      */
@@ -144,6 +154,16 @@ public class User<E> implements Comparable<E>
             throw new Exception("Invalid gender preference!");
         }
         genderPreference = preference;
+    }
+
+    public int getUID()
+    {
+        return UID;
+    }
+
+    public void setUID(int newUID)
+    {
+        UID = newUID;
     }
 
     @Override
