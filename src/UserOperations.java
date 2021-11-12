@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
  * This class handles user authentication and user management.
  * 
  * @author Andrew Estes
- * @NetID ace190002
+ * 
  */
 public class UserOperations {
 
@@ -98,8 +98,8 @@ public class UserOperations {
     /**
      * Adds new user to Users.dat file based on parameters
      * 
-     * @param <E>
      * @param newUser
+     *
      */
     public static <E> void CreateNewUser(User<E> newUser) {
         String firstName = newUser.getFirstName();
@@ -156,15 +156,17 @@ public class UserOperations {
     /**
      * Removes user from Users.dat File based on parameters
      * 
-     * @param userName
+     * @param UID
      */
-    public static void RemoveUser(String userName) {
+    public static User RemoveUser(int UID) {
+        String UserID = Integer.toString(UID);
+        User deletedUser = new User();
+        deletedUser.setUID(UID);
         try {
-
             File originalFile = new File("Users.dat");
             if (!originalFile.exists()) {
                 System.out.println("There are no users to remove! You must add users before you can remove them.");
-                return;
+                return null;
             }
             BufferedReader read = new BufferedReader(new FileReader("Users.dat"));
 
@@ -172,15 +174,15 @@ public class UserOperations {
             String[] userLine;
             while ((line = read.readLine()) != null) {
                 userLine = line.split(", ");
-                if (userLine[2].equals(userName)) {
+                if (userLine[6].equals(UserID)) {
                     break;
                 }
             }
 
             if (line == null) {
-                System.out.println("Username not found. No users removed.");
+                System.out.println("User not found. No users removed.");
                 read.close();
-                return;
+                return null;
             }
             File tempFile = new File(originalFile.getAbsolutePath() + ".tmp");
             PrintWriter print = new PrintWriter(new FileWriter(tempFile));
@@ -213,6 +215,17 @@ public class UserOperations {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        return deletedUser;
+    }
+
+    public static boolean ChangeBio(String Bio)
+    {
+        return true;
+    }
+
+    public static int ChangeStatus(int status)
+    {
+        return status;
     }
 
     /**
