@@ -171,4 +171,15 @@ public class User<E> implements Comparable<E>
         // TODO Auto-generated method stub
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", UID=" + UID +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                '}';
+    }
 }
