@@ -1,7 +1,7 @@
 import java.util.Random;
 
 /**
- * User class stores data for user objects
+ * User class stores basic user data for user objects
  * 
  * @author Andrew Estes 
  * @NetID ace190002
@@ -12,26 +12,31 @@ public class User<E> implements Comparable<E>
 {
     /**
      * Stores the username as a string for the User object.
+     * stored at index 2
      */
     private String username;
 
     /**
      * Stores the hashed password as a string for the User object.
+     * stored at index 3
      */
     private String hashedPassword;
 
     /**
      * User ID number to identify user
+     * stored at index 6
      */
     private int UID;
     
     /**
      * Stores the first name for the User object as a String.
+     * stored at index 0
      */
     private String firstName;
 
     /**
      * Stores the last name for the User object as String.
+     * stored at index 1
      */
     private String lastName;
 
@@ -42,19 +47,38 @@ public class User<E> implements Comparable<E>
 
     /**
      * Stores gender preference of user. Should be 0, for male, 1 for female, or 2 for any
+     * stored at index 5
      */
     private int genderPreference = 2;
 
     /**
      * Gender should be 0 for male, 1 for female, 2 for other
+     * stored at index 4
      */
     private int gender = 2;
 
     /**
+     * Short, 250 character bio about user
+     */
+    private String bio;
+
+    /**
+     * 1 for online, 2, for away, 3 for do not disturb, 4 for offline/invisible
+     */
+    private int status;
+
+   /**
+    * Constructor initializes user object with no predefined data fields
+    */
+    public User()
+   {
+
+   }
+   
+    /**
      * Constructor assigns values to User class's data fields.
      * @param username
      * @param hashedPassword
-     * @param gender
      */
     public User(String username, String hashedPassword)
     {        
