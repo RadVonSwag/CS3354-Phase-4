@@ -3,7 +3,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
- * Unit test for simple App.
+ * Unit test for Dating App. Test Cases written by Prabveer
  */
 public class AppTest {
 
