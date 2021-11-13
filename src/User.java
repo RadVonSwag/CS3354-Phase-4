@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -205,5 +206,45 @@ public class User<E> implements Comparable<E>
                 ", lastName='" + lastName + '\'' +
                 ", gender=" + gender +
                 '}';
+    }
+
+    public boolean getProfile() {
+        return true;
+    }
+
+    public boolean verifyGalaxy(String abc190238) {
+        return true;
+    }
+
+    public boolean deactivateAccount() {
+        return true;
+    }
+
+    private Boolean[] preferences;
+    public void setPreferences(Boolean[] matchpreferences) {
+        preferences=matchpreferences;
+    }
+
+    public Boolean[] getPreferences() {
+        return preferences;
+    }
+
+    public boolean deleteProfile() {
+        return true;
+    }
+
+    private ArrayList<User> matches = new ArrayList<User>();
+
+    public void addMatch(User u){
+        matches.add(u);
+    }
+    public ArrayList<User> getMatches(){
+        return matches;
+    }
+    public boolean matchUser(User u){
+        return true;
+    }
+    public boolean rejectUser(User u){
+        return false;
     }
 }

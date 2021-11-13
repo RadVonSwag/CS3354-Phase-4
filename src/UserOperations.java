@@ -218,6 +218,65 @@ public class UserOperations {
         return deletedUser;
     }
 
+    public static User RemoveUser(String username) {
+
+        User deletedUser = new User();
+        try {
+            File originalFile = new File("Users.dat");
+            if (!originalFile.exists()) {
+                System.out.println("There are no users to remove! You must add users before you can remove them.");
+                return null;
+            }
+            BufferedReader read = new BufferedReader(new FileReader("Users.dat"));
+
+            String line = null;
+            String[] userLine;
+            while ((line = read.readLine()) != null) {
+                userLine = line.split(", ");
+                if (userLine[1].equals(username)) {
+                    break;
+                }
+            }
+
+            if (line == null) {
+                System.out.println("User not found. No users removed.");
+                read.close();
+                return null;
+            }
+            File tempFile = new File(originalFile.getAbsolutePath() + ".tmp");
+            PrintWriter print = new PrintWriter(new FileWriter(tempFile));
+            String lineToRemove = line;
+
+            BufferedReader read2 = new BufferedReader(new FileReader("Users.dat"));
+            while ((line = read2.readLine()) != null) {
+
+                if (!line.trim().equals(lineToRemove)) {
+                    print.println(line);
+                    print.flush();
+                }
+            }
+            print.close();
+            read.close();
+            read2.close();
+            originalFile.delete();
+            tempFile.renameTo(originalFile);
+
+            // Check if file still exists Output to console that the file cannot be changed
+            if (tempFile.exists()) {
+                System.out.println(
+                        "The Users file could not be overwritten with new user data. See \"Users.dat.tmp\" for updated user records");
+            } else {
+                System.out.println("The user has been successfully removed.");
+            }
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return deletedUser;
+    }
+
     public static boolean ChangeBio(String Bio)
     {
         return true;

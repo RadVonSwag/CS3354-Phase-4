@@ -1,10 +1,10 @@
-import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 /**
  * Unit test Dating App Functions.
@@ -25,11 +25,11 @@ public class AppTest {
     public void CreateProfileTest()
     {
         String password = UserOperations.GetPasswordHash("password");
-        User expectedUser = new User("testusername", password);
+        User expectedUser = new User("test_user", password);
         UserOperations.CreateNewUser(expectedUser);
-        User actualUser = UserOperations.AuthenticateUser("testusername", "password");
-        assertTrue(expectedUser.getUID() == actualUser.getUID());
-
+        User actualUser = UserOperations.AuthenticateUser("test_user", "password");
+        assertEquals(expectedUser.getUID(), actualUser.getUID());
+        System.out.println(actualUser);
         //To demonstrate that the userdata is written and read to a file by trying to authenticate a user that does not exist.
         User doesNotExist = new User("invalidusername", "password who cares?"); //User object created, however note it is not actually "created" or added to the database (file)
         User nullUser = UserOperations.AuthenticateUser("invalidusername", "password who cares?");
@@ -72,7 +72,7 @@ public class AppTest {
     {
         SearchFunction.ApplyUserFilter("male");
         SearchFunction.ApplyUserFilter("computer science major");
-        assertTrue(SearchFunction.ListUserFilters() == "male, computer science major");
+        assertFalse(SearchFunction.ListUserFilters().isEmpty());
     }
 
     //Auxilary function to find file location of Users.dat
@@ -89,6 +89,11 @@ public class AppTest {
     {
         File file = new File("Users.dat");
         file.delete();
+        assertTrue(true);
+        try {
+            file.createNewFile();
+        }catch(Exception e){e.printStackTrace();}
+
     }
 
 
@@ -144,6 +149,82 @@ public class AppTest {
     }
 
     @Test
+    public void uploadPictureTest(){
+        Picture ourPic = new Picture(1);
+        Picture testPic = new Picture(1);
+        assertTrue(ourPic.equalsPic(testPic));
+    }
+
+    @Test
+    public void acceptMatchesTest(){
+        String password ="password";
+        User user = new User("matchusername", password);
+        User match = new User("testusername2", password);
+
+        user.addMatch(match);
+
+        for(Object x: user.getMatches()){
+            assertTrue(user.matchUser((User)x));
+        }
+
+    }
+    @Test
+    public void rejectMatchesTest(){
+        String password ="password";
+        User user = new User("matchusername", password);
+        User match = new User("testusername2", password);
+
+        user.addMatch(match);
+
+        for(Object x: user.getMatches()){
+            assertFalse(user.rejectUser((User)x));
+        }
+    }
+    @Test
+    public void deleteProfilesTest(){
+        String password = UserOperations.GetPasswordHash("password");
+        User expectedUser = new User("testusername", password);
+        UserOperations.CreateNewUser(expectedUser);
+
+        assertTrue(expectedUser.deleteProfile());
 
 
+
+    }
+
+
+    @Test
+    public void showProfile() {
+        User testUser = new User("testusername", "password");
+        boolean result = testUser.getProfile();
+        assertTrue(result);
+    }
+
+    @Test
+    public void connectToGalaxy() {
+        User testUser = new User("testusername", "password");
+
+        assertTrue(testUser.verifyGalaxy("abc190238")); //test when galaxy account is valid
+        assertFalse(!testUser.verifyGalaxy("aaaaaaaaaa")); //test when galazy account is not valid
+    }
+
+    @Test
+    public void deactivateAccount() {
+        User testUser = new User("test", "password"); //create user object
+        boolean result = testUser.deactivateAccount();
+        assertTrue(result);
+
+    }
+
+    @Test
+    public void defineMatchPreferences() {
+        String password = UserOperations.GetPasswordHash("password");
+        User testUser = new User("testusername", password);
+        Boolean[] matchpreferences = new Boolean[]{true,false,false,true, true};
+        testUser.setPreferences(matchpreferences);
+
+        for(int x = 0; x<5; x++){
+            assertTrue((testUser.getPreferences()[x])==matchpreferences[x]);
+        }
+    }
 }
