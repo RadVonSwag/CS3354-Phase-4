@@ -181,6 +181,75 @@ public class AppTest {
         }
     }
     @Test
+    public void InterestingPlaces()
+    {
+        ArrayList<Place> places = new ArrayList<>();
+        String x= "place";
+        for(int i=0;i<x.length();i++){
+            places.add(new Place(x.charAt(i)+""));
+        }
+        for(Place ev: places){
+            System.out.println("Place: "+ev.getName());
+        }
+        assertTrue(true);
+    }
+    @Test
+    public void AccountSettings()
+    {
+
+        String input="";
+        switch(2)
+        {
+            // clicks cancel
+            case 1:
+                break;
+            //changes a setting
+            case 2:
+                String setting = input;
+                break;
+
+        }
+        assertTrue(true);
+
+    }
+    @Test
+    public void UpcomingEvents()
+    {
+        ArrayList<Event> events = new ArrayList<>();
+        String x= "ev";
+        for(int i=0;i<x.length();i++){
+            events.add(new Event(x.charAt(i)+""));
+        }
+        for(Event ev: events){
+            System.out.println("Events: "+ev.getName());
+        }
+        assertTrue(true);
+
+    }
+    @Test
+    public void SendMsg()
+    {
+        String msg="hello";
+        User sender= new User("susername","pass");
+        User receiver = new User("rusername","pass");
+        System.out.print(sender.getUserName() + "says");
+        System.out.print(msg + "to");
+        System.out.print(receiver.getUserName());
+        assertTrue(true);
+    }
+    @Test
+    public void SendPicture()
+    {
+
+        Picture picture = new Picture(1);
+        User sender= new User("susername","pass");
+        User receiver = new User("rusername","pass");
+        System.out.print(sender.getUserName() + "sent");
+        System.out.print(picture.toString() + "to");
+        System.out.print(receiver.getUserName());
+        assertTrue(true);
+    }
+    @Test
     public void deleteProfilesTest(){
         String password = UserOperations.GetPasswordHash("password");
         User expectedUser = new User("testusername", password);
