@@ -321,6 +321,16 @@ public class UserOperations {
     }
 
     /**
+     * 
+     * @return
+     */
+    public static void ViewProfile(User user)
+    {
+        ViewProfile newProfile = new ViewProfile();
+        newProfile.ViewProfile(user);
+    }
+
+    /**
      * Checks if file exists
      * 
      * @param <E>

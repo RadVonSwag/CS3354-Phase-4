@@ -142,9 +142,30 @@ public class User<E> implements Comparable<E>
      * Returns gender of user
      * @return gender
      */
+    public String getGenderString() {
+       
+        String userGender = "other";
+        if (gender == 0)
+        {
+         userGender = "male";
+        }
+        if (gender == 1)
+        {
+         userGender = "female";
+        }
+
+        return userGender;
+    }
+
+     /**
+     * Returns gender of user
+     * @return gender
+     */
     public int getGender() {
         return gender;
     }
+
+
     /**
      * Sets the gender for the user. Gender is "other" by default
      * @param preference
@@ -163,10 +184,31 @@ public class User<E> implements Comparable<E>
      * Returns genderPreference
      * @return genderPreference
      */
+    public String getGenderPreferenceString()
+    {
+        String userPref = "other";
+        if (genderPreference == 0)
+        {
+         userPref = "male";
+        }
+        if (gender == 1)
+        {
+         userPref = "female";
+        }
+
+
+        return userPref;
+    }
+
+    /**
+     * Returns genderPreference
+     * @return genderPreference
+     */
     public int getGenderPreference()
     {
         return genderPreference;
     }
+
     /**
      * Sets the gender preference for the user. Preference is "other" by default
      * @param preference
@@ -174,7 +216,7 @@ public class User<E> implements Comparable<E>
      */
     public void setGenderPreference(int preference) throws Exception
     {
-        if (preference != 0 || preference != 1 || preference != 2)
+        if (preference < 0 || preference > 2)
         {
             throw new Exception("Invalid gender preference!");
         }

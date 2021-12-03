@@ -264,7 +264,17 @@ public class AppTest {
 
     @Test
     public void showProfile() {
-        User testUser = new User("testusername", "password");
+        User testUser = new User("Testusername", "password");
+        testUser.setFirstName("Test");
+        testUser.setLastName("User");
+        try {
+            testUser.setGender(0);
+            testUser.setGenderPreference(0);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        UserOperations.ViewProfile(testUser);
         boolean result = testUser.getProfile();
         assertTrue(result);
     }
