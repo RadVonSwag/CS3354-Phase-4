@@ -150,8 +150,8 @@ public class AppTest {
 
     @Test
     public void uploadPictureTest(){
-        Picture ourPic = new Picture(1);
-        Picture testPic = new Picture(1);
+        Picture ourPic = new Picture(1, "/src/placeholder_image.png");
+        Picture testPic = new Picture(1,"/src/placeholder_image.png");
         assertTrue(ourPic.equalsPic(testPic));
     }
 
@@ -241,7 +241,7 @@ public class AppTest {
     public void SendPicture()
     {
 
-        Picture picture = new Picture(1);
+        Picture picture = new Picture(1,"/src/placeholder_image.png");
         User sender= new User("susername","pass");
         User receiver = new User("rusername","pass");
         System.out.print(sender.getUserName() + "sent");
@@ -249,6 +249,19 @@ public class AppTest {
         System.out.print(receiver.getUserName());
         assertTrue(true);
     }
+
+    @Test
+    public void uploadPfpTest(){
+        User u = new User();
+        u.setProfilePicture("src/placeholder_image.png");
+        Picture picture = new Picture(1, "src/placeholder_image.png");
+        if(u.getProfilePicture().equalsPic(picture)){
+            assertTrue(true);
+        }
+        else
+            fail();
+    }
+
     @Test
     public void deleteProfilesTest(){
         String password = UserOperations.GetPasswordHash("password");

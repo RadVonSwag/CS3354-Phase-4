@@ -17,6 +17,8 @@ public class User<E> implements Comparable<E>
      */
     private String username;
 
+    private Picture profilePicture;
+
     /**
      * Stores the hashed password as a string for the User object.
      * stored at index 3
@@ -88,6 +90,10 @@ public class User<E> implements Comparable<E>
         
         Random random = new Random();
         UID = random.nextInt(999999);
+    }
+
+    public void setBio(String bio) {
+        this.bio=bio;
     }
 
     /**
@@ -180,6 +186,12 @@ public class User<E> implements Comparable<E>
         this.gender = gender;
     }
 
+    public void setProfilePicture(String pfpPath){
+        profilePicture=new Picture(1,pfpPath);
+    }
+    public Picture getProfilePicture(){
+        return profilePicture;
+    }
     /**
      * Returns genderPreference
      * @return genderPreference
