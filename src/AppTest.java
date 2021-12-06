@@ -280,6 +280,7 @@ public class AppTest {
         User testUser = new User("Testusername", "password");
         testUser.setFirstName("Test");
         testUser.setLastName("User");
+        testUser.EditBio("I like frog because\nthey go boing and ribbit :)");
         try {
             testUser.setGender(0);
             testUser.setGenderPreference(0);

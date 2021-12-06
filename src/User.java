@@ -235,11 +235,19 @@ public class User<E> implements Comparable<E>
         genderPreference = preference;
     }
 
+    /**
+     * getsUID
+     * @return
+     */
     public int getUID()
     {
         return UID;
     }
 
+    /**
+     * setsUID
+     * @param newUID
+     */
     public void setUID(int newUID)
     {
         UID = newUID;
@@ -251,6 +259,9 @@ public class User<E> implements Comparable<E>
         return 0;
     }
 
+    /**
+     * Returns user data as a string
+     */
     @Override
     public String toString() {
         return "User{" +
@@ -275,16 +286,43 @@ public class User<E> implements Comparable<E>
     }
 
     private Boolean[] preferences;
+    
+    /**
+     * Sets preferences
+     * @param matchpreferences
+     */
     public void setPreferences(Boolean[] matchpreferences) {
         preferences=matchpreferences;
     }
 
+    /**
+     * Gets preferences
+     * @return
+     */
     public Boolean[] getPreferences() {
         return preferences;
     }
 
     public boolean deleteProfile() {
         return true;
+    }
+
+    /**
+     * 
+     * @param bio
+     */
+    public void EditBio(String bio)
+    {
+        this.bio = bio;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String getBio()
+    {
+        return bio;
     }
 
     private ArrayList<User> matches = new ArrayList<User>();
