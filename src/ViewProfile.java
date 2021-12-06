@@ -75,8 +75,7 @@ public class ViewProfile extends javax.swing.JPanel {
         jTextArea1.setColumns(20);
         jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
         jTextArea1.setRows(5);
-        jTextArea1.setText(
-                "Bio:\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod tempor \nincididunt ut labore et dolore magna \naliqua. Ut enim ad minim veniam, quis \nnostrud exercitation ullamco laboris nisi \nut aliquip ex ea commodo consequat. \nDuis aute irure dolor in reprehenderit in \nvoluptate velit esse cillum dolore eu.");
+        jTextArea1.setText("Bio:\n" + user.getBio());
         jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

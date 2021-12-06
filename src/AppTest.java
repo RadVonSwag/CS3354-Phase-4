@@ -36,6 +36,19 @@ public class AppTest {
         assertTrue(nullUser == null);
     }
 
+        //Auxilary function to reset the user data file.
+        @Test
+        public void ResetCreateProfile()
+        {
+            File file = new File("Users.dat");
+            file.delete();
+            assertTrue(true);
+            try {
+                file.createNewFile();
+            }catch(Exception e){e.printStackTrace();}
+    
+        }
+
     @Test
     public void DeleteProfileTest()
     {
@@ -82,20 +95,6 @@ public class AppTest {
         File file = new File("Users.dat");
         System.out.println(file.getAbsolutePath());
     }
-    
-    //Auxilary function to reset the user data file.
-    @Test
-    public void ResetCreateUser()
-    {
-        File file = new File("Users.dat");
-        file.delete();
-        assertTrue(true);
-        try {
-            file.createNewFile();
-        }catch(Exception e){e.printStackTrace();}
-
-    }
-
 
     @Test
     public void searchForUserTest(){
@@ -256,9 +255,6 @@ public class AppTest {
         UserOperations.CreateNewUser(expectedUser);
 
         assertTrue(expectedUser.deleteProfile());
-
-
-
     }
 
 
@@ -267,6 +263,8 @@ public class AppTest {
         User testUser = new User("Testusername", "password");
         testUser.setFirstName("Test");
         testUser.setLastName("User");
+        testUser.EditBio("I think frog is best animal because\n they go boing and ribbit");
+        //testUser.EditBio("Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod tempor \nincididunt ut labore et dolore magna \naliqua. Ut enim ad minim veniam, quis \nnostrud exercitation ullamco laboris nisi \nut aliquip ex ea commodo consequat. \nDuis aute irure dolor in reprehenderit in \nvoluptate velit esse cillum dolore.");
         try {
             testUser.setGender(0);
             testUser.setGenderPreference(0);

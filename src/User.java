@@ -278,6 +278,11 @@ public class User<E> implements Comparable<E> {
         bio = newBio;
     }
 
+    public String getBio()
+    {
+        return bio;
+    }
+
     private ArrayList<User> matches = new ArrayList<User>();
 
     public void addMatch(User u) {
